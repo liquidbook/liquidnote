@@ -1,4 +1,5 @@
 <?php 
+// from article http://www.wpexplorer.com/wordpress-tinymce-tweaks/
 // Enable font size & font family selects in the editor
 if ( ! function_exists( 'wpex_mce_buttons' ) ) {
 	function wpex_mce_buttons( $buttons ) {
@@ -52,7 +53,7 @@ if ( ! function_exists( 'wpex_styles_dropdown' ) ) {
 		// Create array of new styles
 		$new_styles = array(
 			array(
-				'title'	=> __( 'Custom Styles', 'wpex' ),
+				'title'	=> __( 'DPG Styles', 'wpex' ),
 				'items'	=> array(
 					array(
 						'title'		=> __('Theme Button','wpex'),
@@ -63,6 +64,11 @@ if ( ! function_exists( 'wpex_styles_dropdown' ) ) {
 						'title'		=> __('Highlight','wpex'),
 						'inline'	=> 'span',
 						'classes'	=> 'text-highlight',
+					),
+					array(
+						'title'		=> __('Deluxe Style','wpex'),
+						'inline'	=> 'span',
+						'classes'	=> 'mydeluxe',
 					),
 				),
 			),
@@ -108,7 +114,8 @@ function my_register_mce_button( $buttons ) {
 }
 
 function my_shortcodes_mce_css() {
-	wp_enqueue_style('symple_shortcodes-tc', plugins_url(LIQUIDNOTE_CSS_DIR + 'my-mce-style.css', LIQUIDNOTE_BASE_DIR_LONG) );
+	//wp_enqueue_style('simple_shortcodes-tc', plugins_url(LIQUIDNOTE_CSS_DIR + 'my-mce-style.css', LIQUIDNOTE_BASE_DIR_LONG) );
+	wp_enqueue_style('simple_shortcodes-tc', plugins_url('/css/my-mce-style.css', LIQUIDNOTE_CSS_DIR) );
 }
 add_action( 'admin_enqueue_scripts', 'my_shortcodes_mce_css' );
 ?>

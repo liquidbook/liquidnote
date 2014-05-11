@@ -1,58 +1,48 @@
 jQuery(document).ready(function ($) { //noconflict wrapper
 
-    var iconUp = 'fa-angle-double-up';
-    var iconDown = 'fa-angle-double-down';
-    var textExpand = 'Expand';
-    var textCollapse = 'Collapse';
-
-    $('.expand_course_detail').click(
+    $('.annotate-button').click(
 
     function () {
-        if ($('.learndash_topic_dots').is(':visible')) {
-            $('.learndash_topic_dots').slideUp();
-            $(this).removeClass('expanded');
-            $(this).addClass('collapsed');
-            $(this).find('span').html(textExpand);
-            $(this).find('i').removeClass(iconUp);
-            $(this).find('i').addClass(iconDown);
-        } else {
+        var trigger_id = $(this).attr('id');
+        var trigger_container = '.' + trigger_id;
+        var my_id = trigger_id.substring(6, trigger_id.length);
 
-            $('.learndash_topic_dots').slideDown();
-            $(this).removeClass('collapsed');
-            $(this).addClass('expanded');
-            $(this).find('span').html(textCollapse);
-            $(this).find('i').removeClass(iconDown);
-            $(this).find('i').addClass(iconUp);
-        }
-        return false;
-    }
-
-    ); // ends .expand_course_detail
-
-    $('.expand_mycourse_detail').click(
-
-    function () { // exanding
-        if ($(this).is('.collapsed')) {
-            $('.flip').slideDown();
-            $('.list_arrow').removeClass('collapse');
-            $('.list_arrow').addClass('expand');
-            $(this).removeClass('collapsed');
-            $(this).addClass('expanded');
-            $(this).find('span').html(textCollapse);
-            $(this).find('i').removeClass(iconDown);
-            $(this).find('i').addClass(iconUp);
-        } else if ($(this).is('.expanded')) {
-            $('.flip').slideUp();
-            $('.list_arrow').removeClass('expand');
-            $('.list_arrow').addClass('collapse');
-            $(this).removeClass('expanded');
-            $(this).addClass('collapsed');
-            $(this).find('span').html(textExpand);
-            $(this).find('i').removeClass(iconUp);
-            $(this).find('i').addClass(iconDown);
+        if ($(trigger_container).hasClass("lnvideo")) {
+            var video_id = "#video" + my_id;
+            var video = $(video_id).attr("src");
+            //console.log("it has a video class");
+            $(video_id).attr('src', '');
+            $(video_id).attr('src', video);
         }
 
+        if ($(trigger_container).hasClass("lnsound")) {
+            //var video_id = "#video" + my_id;
+            var sound_src = $(trigger_container + " iframe").attr("src");
+            //console.log("it has a sound class");
+            //console.log(sound_src);
+            $(trigger_container + ' iframe').attr('src', '');
+            $(trigger_container + ' iframe').attr('src', sound_src);
+            console.log($(trigger_container));
+        }
+
+        $(trigger_container).toggle('slow');
+        //console.log(video);
         return false;
-    }); // ends .expand_mycourse_detail
+    }); // end .annotate-button.click
+    $('.annotate-closebox').click(
+
+    function () {
+        var trigger_container = $(this).parent().get(0);
+        var trigger_src = $(this).parent().find('iframe').attr("src");
+        $(trigger_container).toggle('fast');
+        if ($(this).parent().has('iframe')) {
+            $(this).parent().find('iframe').attr('src', '');
+            $(this).parent().find('iframe').attr('src', trigger_src);
+            console.log(trigger_src);
+        }
+
+
+        return false;
+    }); // end .annotate-button.click      
 
 }); //end noconflict

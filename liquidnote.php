@@ -22,22 +22,24 @@ define('LIQUIDNOTE_INC_DIR', LIQUIDNOTE_BASE_DIR_LONG . '/inc/');
 define('LIQUIDNOTE_JS_DIR', LIQUIDNOTE_BASE_DIR_LONG . '/js/');
 define('LIQUIDNOTE_CSS_DIR', LIQUIDNOTE_BASE_DIR_LONG . '/css/');
 
-function liquidnote_scripts_with_jquery()
-{
-	// Register the script like this for a theme:
-	wp_register_script( 'liquidnote-script', plugins_url(LIQUIDNOTE_JS_DIR + 'liquidnote-script.js', LIQUIDNOTE_BASE_DIR_LONG) , array( 'jquery' ),'1.0',true );
-	// For either a plugin or a theme, you can then enqueue the script:
-	wp_enqueue_script( 'annotate-plugin-script' );
-	// Register the script like this for a theme:
+function liquidnote_enqueue_items() {
+    wp_register_script( 'liquidnote-script', plugins_url('js/liquidnote-script.js',  __FILE__) , array( 'jquery' ),'1.0',true );
+	wp_register_style('liquidnote_style', plugins_url('css/liquidnote_style.css', __FILE__),'','1.0');
+	wp_register_style('lb_font_awesome', plugins_url('css/font-awesome.min.css', __FILE__),'','4.0.3');
 	
+    wp_enqueue_script( 'liquidnote-script' );
+    wp_enqueue_style('liquidnote_style');
+     wp_enqueue_style('lb_font_awesome');
+
 }
-//add_action( 'wp_enqueue_scripts', 'liquidnote_scripts_with_jquery' );
+ 
+add_action( 'wp_enqueue_scripts', 'liquidnote_enqueue_items' );
+
 
 /*------------------------------------------------------------------
 /* Including Project functions
 /*------------------------------------------------------------------*/
-//require_once( LIQUIDNOTE_INC_DIR . 'widgets.php' );
-//require_once( LIQUIDNOTE_INC_DIR . 'shortcode.php' );
-require_once( LIQUIDNOTE_INC_DIR . 'new-mce-stuff.php' );
+
+require_once( LIQUIDNOTE_INC_DIR . 'admin_tool.php' );
 
 ?>

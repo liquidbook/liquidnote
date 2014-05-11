@@ -1,0 +1,18 @@
+/*****************************/
+/* Author: Felipe Lujan-Bear */
+/* plugin: liquidnote */
+/*****************************/
+
+.annotate-box {padding:10px;border-radius: 10px 10px 10px 10px;-moz-border-radius: 10px 10px 10px 10px;-webkit-border-radius: 10px 10px 10px 10px;border: 1px solid #e0e0e0;}
+.annotate-box {position: relative;}
+.annotate-box h2 {margin: 0 36px 16px 0;margin-top: 0px;}
+
+.annotate-closebox i {position: absolute; right: 10px; top: 10px;}
+.annotate-closebox i {color:#e0e0e0;}
+.annotate-closebox i:hover, .annotate-closebox i:active {color:#2B2828;}
+.video-container {  position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;}
+
+.video-container iframe,
+.video-container object,
+.video-container embed { position: absolute; top: 0;left: 0;width: 100%;height: 100%;}
+.fa {color:#9E9E9E; margin-left:4px;}
