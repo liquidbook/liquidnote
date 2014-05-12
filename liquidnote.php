@@ -41,5 +41,6 @@ add_action( 'wp_enqueue_scripts', 'liquidnote_enqueue_items' );
 /*------------------------------------------------------------------*/
 
 require_once( LIQUIDNOTE_INC_DIR . 'admin_tool.php' );
+require_once( LIQUIDNOTE_INC_DIR . 'liquidnote_shortcode.php' );
 
 ?>
