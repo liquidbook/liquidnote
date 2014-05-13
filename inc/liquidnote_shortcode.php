@@ -1,5 +1,10 @@
 <?php
-// Add liquidnote_link Shortcode
+/*****************************/
+/* Author: Felipe Lujan-Bear */
+/* plugin: liquidnote */
+/*****************************/
+
+/* returns the liquidnote_link shortcode as a link with an icon */
 function liquidnote_link($atts) {
 
 	// Attributes
@@ -26,8 +31,7 @@ function liquidnote_link($atts) {
 	
 }
 add_shortcode( 'lna_link', 'liquidnote_link' );
-
-// Add Shortcode
+/* tests content type and calls liquidnote_content_build */
 function liquidnote_content( $atts , $content = null ) {
 	
 	// Attributes
@@ -47,12 +51,25 @@ function liquidnote_content( $atts , $content = null ) {
 }
 add_shortcode( 'lna_content', 'liquidnote_content' );
 
+/* returns the liquidnote_content shortcode as a hidden div block  */
+/*  to be accessed by the liquidnote link */
 function liquidnote_content_build($id,$style,$content) {
 	$my_content =  '<div class="' . $id . ' annotate-box ' . $style . '" style="display:none;">';
     $my_content .=  '<div class="annotate-closebox"><a href="#"><i class="fa fa-times-circle fa-2x"></i></a></div>'; 
-    $my_content .= $content;
+    $my_content .= do_shortcode($content);
     $my_content .= '</div>';
     return $my_content;
 }
+/* test oembed code. if it fails to load then it returns an error message */
+function liquidnote_oembed($content=NULL) {
+	$embed_code = wp_oembed_get($my_embed);
+	if(!$embed_code){
+		$my_return = '<p class="ln-embed-error">'. _e('There was an issue loading the embedded link.') .'</p>';
+	} else {
+		$my_return = '<span class="ln-embed">'.$embed_code.'</span>';
+			}
+	return $my_return;		
+}
+add_shortcode( 'lna_oembed', 'liquidnote_oembed' );
 
 ?>
