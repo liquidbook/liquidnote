@@ -13,4 +13,5 @@ sitemap.xml.gz
 wp-config.php
 .DS_Store
 *.psd
+_archive/
 

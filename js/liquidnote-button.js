@@ -1,7 +1,7 @@
 (function() {
 	tinymce.PluginManager.add('liquidnote_mce_button', function( editor, url ) {
 		editor.addButton( 'liquidnote_mce_button', {
-			text: false,
+			text: 'LiquidNote',
 			icon: 'liquidnote-icon',
 			type: 'menubutton',
 			menu: [
@@ -35,7 +35,8 @@
 						
 					]
 				}, //end first sub menu
-				{
+			/*
+	{
 					text: 'Pause',
 					menu: [
 						{
@@ -51,48 +52,67 @@
 							}
 						}
 					]
-				}, //end second sub menu
+				},
+*/ //end second sub menu
 				{
-					text: 'Shortcode Builder',
+					text: 'Annotation Builder',
 					menu: [
 						{
-							text: 'Pop-Up',
+							text: 'Annotate Media',
 							onclick: function() {
 								editor.windowManager.open( {
-									title: 'Client Name Shortcode Tool',
+									title: 'Annotate Media Tool',
 									body: [
 										{
 											type: 'textbox',
-											name: 'textboxName',
-											label: 'Text Box',
-											value: '30'
+											name: 'lnTitle',
+											label: 'Annotation Title',
+											value: 'My title'
 										},
 										{
 											type: 'textbox',
-											name: 'multilineName',
-											label: 'Multiline Text Box',
-											value: 'You can say a lot of stuff in here',
+											name: 'lnLinkText',
+											label: 'Linked Text',
+											value: 'linked text here'
+										},
+										{
+											type: 'textbox',
+											name: 'lnEmbed',
+											label: 'Media Link',
+											value: 'http://youtu.be/l5ODwR6FPRQ',
+											multiline: true,
+											minWidth: 300,
+											minHeight: 100
+										},
+										{
+											type: 'textbox',
+											name: 'lnCaption',
+											label: 'Caption',
+											value: '',
 											multiline: true,
 											minWidth: 300,
 											minHeight: 100
 										},
 										{
 											type: 'listbox',
-											name: 'listboxName',
-											label: 'List Box',
+											name: 'lnType',
+											label: 'Type',
 											'values': [
-												{text: 'Option 1', value: '1'},
-												{text: 'Option 2', value: '2'},
-												{text: 'Option 3', value: '3'}
+												{text: 'Video', value: 'video'},
+												{text: 'Sound', value: 'sound'},
+												{text: 'Image', value: 'image'},
+												{text: 'Text', value: 'text'}
 											]
 										}
+
 									],
 									onsubmit: function( e ) {
-										editor.insertContent( '[client_shortcode textbox="' + e.data.textboxName + '" multiline="' + e.data.multilineName + '" listbox="' + e.data.listboxName + '"]');
+										editor.insertContent(  lb_shortcode_tool(e) );
 									}
 								});
 							}
-						}
+						},
+						
 					]
 				}//end third sub menu
 			]
@@ -112,6 +132,16 @@ function lb_shortcode(type){
 	  var lb_content = lb_content_sc(id,type);
 	  return lb_button + lb_content;
 }
+function lb_shortcode_tool(e){
+	var argc = arguments.length;
+	  if (argc === 0) {
+	    type = 'video';
+	  }
+	  var  id = mt_rand();
+	  var lb_button = ln_button_link(id,e);
+	  var lb_content = lb_content_builder(id, e);
+	  return lb_button + lb_content;
+}
 
 function ln_button_sc(id,type){
 	var my_button = '[lna_link id="noteid' + id + '" type="' + type + '" text="your link"]';
@@ -120,6 +150,23 @@ function ln_button_sc(id,type){
 function lb_content_sc(id,type){
 	var my_content = '[lna_content id="noteid' + id + '" type="' + type + '"]your annotated content[/lna_content]';
 	return my_content;	
+}
+function ln_button_link(id,e){
+	var my_button = '[lna_link id="noteid' + id + '" type="' + e.data.lnType + '" text="' + e.data.lnLinkText + '"]';
+	return my_button;	
+}
+function lb_content_builder(id,e){
+	var my_title = '<h2 class"lntitle">' + e.data.lnTitle + '</h2>';
+	
+	var my_caption = '<div class"lncaption">' + e.data.lnCaption + '</div>';
+	if(e.data.lnType=='image') {
+		var my_embed = '<img src="' + e.data.lnEmbed + '" title="' + e.data.lnTitle + '" alt="' + e.data.lnTitle + '" width="100%">';
+	} else {
+		var my_embed = e.data.lnEmbed;
+	}
+	var my_content = my_title + my_embed + my_caption;
+	var my_shortcode = '[lna_content id="noteid' + id + '" type="' + e.data.lnType + '"]' + my_content + '[/lna_content]';
+	return my_shortcode;	
 }
 
 /* support functions */
