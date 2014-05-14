@@ -31,6 +31,7 @@ function liquidnote_link($atts) {
 	
 }
 add_shortcode( 'lna_link', 'liquidnote_link' );
+
 /* tests content type and calls liquidnote_content_build */
 function liquidnote_content( $atts , $content = null ) {
 	
@@ -60,16 +61,37 @@ function liquidnote_content_build($id,$style,$content) {
     $my_content .= '</div>';
     return $my_content;
 }
+
 /* test oembed code. if it fails to load then it returns an error message */
-function liquidnote_oembed($content=NULL) {
-	$embed_code = wp_oembed_get($my_embed);
+function liquidnote_oembed($atts) {
+	extract( shortcode_atts(
+		array(
+			'link'=> '',
+		), $atts )
+	);
+	$embed_code = wp_oembed_get($link);
 	if(!$embed_code){
-		$my_return = '<p class="ln-embed-error">'. _e('There was an issue loading the embedded link.') .'</p>';
+		$my_return = '<p class="ln-embed-error">There was an issue loading the embedded link.</p>';
+		/* $my_return = '<p class="ln-embed-error">'. _e('There was an issue loading the embedded link.') .'</p>'; */
 	} else {
 		$my_return = '<span class="ln-embed">'.$embed_code.'</span>';
 			}
 	return $my_return;		
 }
-add_shortcode( 'lna_oembed', 'liquidnote_oembed' );
+add_shortcode( 'lna_embed', 'liquidnote_oembed' );
+
+function liquidnote_header($atts){
+	// Attributes
+	extract( shortcode_atts(
+		array(
+			'title' => '',
+			'html' => 'h2',
+			'css' => 'lna-title',
+		), $atts )
+	);
+	$my_return = '<'.$html.' class="'.$css.'">'.$title.'</'.$html.'>';
+	return $my_return;
+}
+add_shortcode('lna_header','liquidnote_header')
 
 ?>

@@ -55,11 +55,14 @@
 				},
 */ //end second sub menu
 				{
-					text: 'Annotation Builder',
+					text: 'LiquidNote Builder',
 					menu: [
 						{
-							text: 'Annotate Media',
+							text: 'Add Annotate',
 							onclick: function() {
+								var my_selection = editor.selection.getContent({format: 'text'}); 
+								if(!my_selection) { my_selection = 'your link text here'}
+								if(my_selection == '') {my_selection};
 								editor.windowManager.open( {
 									title: 'Annotate Media Tool',
 									body: [
@@ -73,7 +76,7 @@
 											type: 'textbox',
 											name: 'lnLinkText',
 											label: 'Linked Text',
-											value: 'linked text here'
+											value: my_selection
 										},
 										{
 											type: 'textbox',
@@ -113,7 +116,7 @@
 							}
 						},
 						
-					]
+					] // end pop-out
 				}//end third sub menu
 			]
 		});
@@ -161,8 +164,10 @@ function lb_content_builder(id,e){
 	var my_caption = '<div class"lncaption">' + e.data.lnCaption + '</div>';
 	if(e.data.lnType=='image') {
 		var my_embed = '<img src="' + e.data.lnEmbed + '" title="' + e.data.lnTitle + '" alt="' + e.data.lnTitle + '" width="100%">';
-	} else {
+	} else if(e.data.lnType=='text') {
 		var my_embed = e.data.lnEmbed;
+	} else {
+		var my_embed = ' [lna_embed link="' + e.data.lnEmbed + '"] ';
 	}
 	var my_content = my_title + my_embed + my_caption;
 	var my_shortcode = '[lna_content id="noteid' + id + '" type="' + e.data.lnType + '"]' + my_content + '[/lna_content]';
@@ -189,4 +194,7 @@ function mt_rand(min, max) {
     max = parseInt(max, 10);
   }
   return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+function cl(my_value){
+	console.log(my_value);
 }
