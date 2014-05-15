@@ -159,7 +159,7 @@ function ln_button_link(id,e){
 	return my_button;	
 }
 function lb_content_builder(id,e){
-	var my_title = '<h2 class"lntitle">' + e.data.lnTitle + '</h2>';
+	var my_title = '[lna_header title="' + e.data.lnTitle + '"]';
 	
 	var my_caption = '<div class"lncaption">' + e.data.lnCaption + '</div>';
 	if(e.data.lnType=='image') {
