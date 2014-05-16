@@ -159,17 +159,26 @@ function ln_button_link(id,e){
 	return my_button;	
 }
 function lb_content_builder(id,e){
-	var my_title = '[lna_header title="' + e.data.lnTitle + '"]';
-	
-	var my_caption = '<div class"lncaption">' + e.data.lnCaption + '</div>';
+	var my_content ='';
+	if(e.data.lnTitle) {
+		var my_title = '[lna_header title="' + e.data.lnTitle + '"]';
+		my_content += my_title;
+	}
 	if(e.data.lnType=='image') {
 		var my_embed = '<img src="' + e.data.lnEmbed + '" title="' + e.data.lnTitle + '" alt="' + e.data.lnTitle + '" width="100%">';
+		my_content += my_embed;
 	} else if(e.data.lnType=='text') {
 		var my_embed = e.data.lnEmbed;
+		my_content += my_embed;
 	} else {
 		var my_embed = ' [lna_embed link="' + e.data.lnEmbed + '"] ';
+		my_content += my_embed;
 	}
-	var my_content = my_title + my_embed + my_caption;
+	
+	if(e.data.lnCaption) {
+		var my_caption = '[lna_caption]' + e.data.lnCaption + '[/lna_caption]';
+		my_content += my_caption;
+	}
 	var my_shortcode = '[lna_content id="noteid' + id + '" type="' + e.data.lnType + '"]' + my_content + '[/lna_content]';
 	return my_shortcode;	
 }

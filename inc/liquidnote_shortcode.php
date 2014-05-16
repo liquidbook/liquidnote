@@ -92,6 +92,21 @@ function liquidnote_header($atts){
 	$my_return = '<'.$html.' class="'.$css.'">'.$title.'</'.$html.'>';
 	return $my_return;
 }
-add_shortcode('lna_header','liquidnote_header')
+add_shortcode('lna_header','liquidnote_header');
+
+function liquidnote_caption($atts,$content = null){
+	// Attributes
+	extract( shortcode_atts(
+		array(
+			'html' => 'span',
+			'css' => 'lna-caption',
+		), $atts )
+	);
+	if($content!==''){
+		$my_return = '<'.$html.' class="'.$css.'">'.do_shortcode($content).'</'.$html.'>';
+		return $my_return;
+	}
+}
+add_shortcode('lna_caption','liquidnote_caption');
 
 ?>

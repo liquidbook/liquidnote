@@ -4,7 +4,7 @@
 /*****************************/
 
 .annotate-box {padding:10px;border-radius: 10px 10px 10px 10px;-moz-border-radius: 10px 10px 10px 10px;-webkit-border-radius: 10px 10px 10px 10px;border: 1px solid #e0e0e0;}
-.annotate-box {position: relative;}
+.annotate-box {position: relative;margin: 10px 0;}
 .annotate-box h2 {margin: 0 36px 16px 0;margin-top: 0px;}
 
 .annotate-closebox i {position: absolute; right: 10px; top: 10px;}
