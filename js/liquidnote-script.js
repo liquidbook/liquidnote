@@ -28,5 +28,25 @@ jQuery(document).ready(function ($) { //noconflict wrapper
             }); 
         return false;
     }); // end .annotate-button.click      
+    
+    
+   /*  The title triggers the expand/collapse of the next nearest contents block */
+    $('.item-title').click(
+        
+        function () {
+            var clickedMe = $(this);
+            clickedMe.nextAll('.item-contents').first().slideToggle('fast' , function() {
+                if($(this).is(':hidden')){
+                    clickedMe.addClass('closed');
+                //console.log('hidden +');
+                } else {
+                    clickedMe.removeClass('closed');
+                //console.log('visible');    
+                } 
+                //console.log(this);
+            });
+            
+        }); // end .item-title
+
 
 }); //end noconflict
