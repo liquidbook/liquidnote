@@ -109,4 +109,44 @@ function liquidnote_caption($atts,$content = null){
 }
 add_shortcode('lna_caption','liquidnote_caption');
 
+/*  [lna_toggle title="Your title here"][/lna_toggle] - base required shortcode  */
+/* [lna_toggle title="Your Title Here" title_html="h2" contents_html="div" title_css="your_class" title_css="your_class"][/lna_toggle] */
+
+/*  title_html = h2 is default - contents_html = div is default - optional value  */
+ /* title_css =  , and contents_css - is optional class value  */
+
+function liquidnote_toggle_content($atts,$content = null){
+	extract( shortcode_atts(
+		array(
+			'title' => 'your title here',
+			'title_css' => 'item-title',
+			'contents_css' => 'item-contents',
+			'title_html' => 'h2',
+			'contents_html' => 'div',
+			'opened' => false,
+		), $atts )
+	); // end extract
+	
+	/* start toggle closed - optional true state for open  */
+	if($opened) {
+		$title_state = 	$content_state = '';
+		
+		} else {
+		
+		$title_state = ' closed';
+		$content_state = 'style="display:none;"';	
+	}
+	if($content!==''){
+		$my_return = '<'.$title_html.' class="lna-trigger '.$title_css . $title_state . '">' . $title . '</'.$title_html.'>';
+		$my_return .= '<'.$contents_html.' class="lna-target '.$contents_css.'" '.$content_state.'>' . do_shortcode($content) . '</'.$contents_html.'>';
+		return $my_return;
+	} else {
+		$my_return = '<'.$title_html.' class="lna-trigger '.$title_css . $title_state . '">'. $title .'</'.$title_html.'>';
+		$my_return .= '<'.$contents_html.' class="lna-target '.$contents_css.'" '.$content_state.'> Your contents here </'.$contents_html.'>';
+		return $my_return;
+	}
+} // end liquidnote_toggle_content
+add_shortcode('lna_toggle','liquidnote_toggle_content');
+
+
 ?>

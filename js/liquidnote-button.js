@@ -31,6 +31,46 @@
 							onclick: function() {
 								editor.insertContent( lb_shortcode('text'));
 							}
+						},
+						{
+							text: 'Content Toggle',
+							onclick: function() {
+								var my_selection = editor.selection.getContent({format: 'text'});
+								if(!my_selection) { my_selection = 'Your Contents Here'}
+								if(my_selection == '') {my_selection};
+								editor.windowManager.open( {
+									title: 'Content Toggle Tool',
+									body: [
+										{
+											type: 'textbox',
+											name: 'lnContentTitle',
+											label: 'Content Title',
+											value: 'Your title here'
+										},
+										{
+											type: 'textbox',
+											name: 'lnContentText',
+											label: 'Content',
+											value: my_selection,
+											multiline: true,
+											minWidth: 300,
+											minHeight: 200
+										},
+										{
+											type: 'checkbox',
+											name: 'lnContentShow',
+											checked: true,
+											label: 'Start Open',
+											text: 'Checked is open'
+										}
+									],
+									onsubmit: function( e ) {
+										editor.insertContent(  ln_content_toggle_tool(e) );
+									}
+								}); // end of editor.windowManager
+							} // end of onClick function
+
+							
 						}
 						
 					]
@@ -112,12 +152,11 @@
 									onsubmit: function( e ) {
 										editor.insertContent(  lb_shortcode_tool(e) );
 									}
-								});
-							}
-						},
-						
-					] // end pop-out
-				}//end third sub menu
+								}); // end of editor.windowManager
+							} // end of onClick function
+						}, //end of in pop-out menu curly brackets
+					] // end menu pop-out
+				} //end third sub menu
 			]
 		});
 	});
@@ -125,7 +164,7 @@
 /* liquidnote functions  */ 
 //  [liquidnote-button id="123456789" type="video"]your link text[/liquidnote-button]
 //  [liquidnote-content id="123456789" type="video"]your annotated content[/liquidnote-content]
-function lb_shortcode(type){
+function lb_shortcode(type) {
 	var argc = arguments.length;
 	  if (argc === 0) {
 	    type = 'text';
@@ -135,7 +174,7 @@ function lb_shortcode(type){
 	  var lb_content = lb_content_sc(id,type);
 	  return lb_button + lb_content;
 }
-function lb_shortcode_tool(e){
+function lb_shortcode_tool(e) {
 	var argc = arguments.length;
 	  if (argc === 0) {
 	    type = 'video';
@@ -145,8 +184,7 @@ function lb_shortcode_tool(e){
 	  var lb_content = lb_content_builder(id, e);
 	  return lb_button + lb_content;
 }
-
-function ln_button_sc(id,type){
+function ln_button_sc(id,type) {
 	var my_button = '[lna_link id="noteid' + id + '" type="' + type + '" text="your link"]';
 	return my_button;	
 }
@@ -182,7 +220,26 @@ function lb_content_builder(id,e){
 	var my_shortcode = '[lna_content id="noteid' + id + '" type="' + e.data.lnType + '"]' + my_content + '[/lna_content]';
 	return my_shortcode;	
 }
+/*  toggle contents shortcode generator  */
+/* [lna_toggle title="Your title here"][/lna_toggle]  */
+/*  [lb_toggle title="Software Engineer (distributed systems)" opened="yes"]  */
 
+function ln_content_toggle_tool(e){
+	  var showContent = '';
+	  if( e.data.lnContentShow ) { 
+		  showContent = 'opened="yes"';
+	  }
+	  var my_toggle = '[lna_toggle title="' + e.data.lnContentTitle + '" ' + showContent + ']';
+	  my_toggle += e.data.lnContentText;
+	  my_toggle += '[/lna_toggle]';
+	  return my_toggle;
+}
+
+
+function ln_toggle_sc(id,type){
+	var my_button = '[lna_link id="noteid' + id + '" type="' + type + '" text="your link"]';
+	return my_button;	
+}
 /* support functions */
 function mt_rand(min, max) {
   //  discuss at: http://phpjs.org/functions/mt_rand/

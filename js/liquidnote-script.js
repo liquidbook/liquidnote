@@ -31,11 +31,11 @@ jQuery(document).ready(function ($) { //noconflict wrapper
     
     
    /*  The title triggers the expand/collapse of the next nearest contents block */
-    $('.item-title').click(
+    $('.lna-trigger').click(
         
         function () {
             var clickedMe = $(this);
-            clickedMe.nextAll('.item-contents').first().slideToggle('fast' , function() {
+            clickedMe.nextAll('.lna-target').first().slideToggle('fast' , function() {
                 if($(this).is(':hidden')){
                     clickedMe.addClass('closed');
                 //console.log('hidden +');

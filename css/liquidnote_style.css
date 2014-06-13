@@ -17,3 +17,5 @@
 .video-container embed { position: absolute; top: 0;left: 0;width: 100%;height: 100%;}
 iframe { width: 100%}
 .fa {color:#9E9E9E; margin-left:4px;}
+
+.lna-trigger:hover {cursor: pointer;}
